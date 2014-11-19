@@ -3,24 +3,21 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
+    <EditText
+        android:id="@+id/start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="From" >
+        android:padding="10dp"
+        android:hint="From" />
 
-    </AutoCompleteTextView>
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView2"
+    <EditText
+        android:id="@+id/end"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="To" >
+        android:padding="10dp"
+        android:hint="To" />
 
-        <requestFocus />
-    </AutoCompleteTextView>
 
     <Button
         android:id="@+id/button1"
@@ -29,4 +26,18 @@
         android:text="Search" 
         android:onClick="search"/>
 
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getData"
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" " />
+    
 </LinearLayout>
