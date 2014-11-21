@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/edTxtFrom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="From"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/edTxtTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="To"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/Searching"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search" 
+        android:onClick="searching"/>
+
+</LinearLayout>

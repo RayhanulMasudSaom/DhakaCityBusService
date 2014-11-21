@@ -18,6 +18,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.ByteArrayBuffer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 //import android.R;
 import android.support.v7.app.ActionBarActivity;
@@ -36,6 +38,8 @@ public class MainActivity extends ActionBarActivity {
 	String urlstr="https://infinite-woodland-5408.herokuapp.com";
 	TextView tv2;
 	EditText start,end;
+	Separation sep;
+	
 	@Override
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,10 @@ public class MainActivity extends ActionBarActivity {
 		tv2=(TextView) findViewById(R.id.tv2);
 		start=(EditText) findViewById(R.id.start);
 		end=(EditText) findViewById(R.id.end);
+		sep=new Separation();
+		//int l= sep.StringDivide();
+		//System.out.println(l);
+	    tv2.setText(sep.StringDivide());
 	}
 
 	@Override
@@ -70,8 +78,27 @@ public class MainActivity extends ActionBarActivity {
 		String des= end.getText().toString();
 		MyInternet  internet =new MyInternet();
 		String returned =internet.getInternetData(source,des);
-		tv2.setText(returned);
-		
+		//tv2.setText(returned);
+		sep= new Separation();
+		String newStr= sep.StringDivide();
+		tv2.setText(newStr);
+		/*JSONArray array= json.getJSONArray("BusRoute");
+		for(int i=0;i<array.length();i++){
+			JSONObject obj= (JSONObject)array.get(i);
+			String bus = obj.getString("bus");
+			String route= obj.getString("route");
+			//busroute.put(bus, route);
+			
+		}*/
+		//String source= start.getText().toString();
+		//String des= end.getText().toString();
+		/*MyInternet  internet =new MyInternet();
+		JSONObject obj= (JSONObject)internet.getInternetData(source,des);
+		String data= obj.toString();
+		tv2.setText("");
+		System.out.println(data);*/
+		//Internet internet= new Internet();
+		//internet.fetchJSON(source, des);
 	}
 	public void search(View v){
 		
