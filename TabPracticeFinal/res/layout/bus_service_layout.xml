@@ -2,6 +2,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#f8f888"
+    android:id="@+id/lay"
     android:orientation="vertical" >
 
     <Button
@@ -29,8 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:text="TextView" />
+        android:layout_marginTop="80dp"
+        android:textSize="25dp"
+        android:text="From" />
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView1"
@@ -39,7 +41,7 @@
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:text="AutoCompleteTextView" >
+        android:hint="From">
 
         <requestFocus />
     </AutoCompleteTextView>
@@ -49,8 +51,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:text="TextView" />
+        android:textSize="25dp"
+        android:layout_marginTop="15dp"
+        android:text="To" />
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView2"
@@ -59,14 +62,14 @@
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:text="AutoCompleteTextView" />
+        android:hint="To" />
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
        	android:layout_marginTop="10dp"
-        android:text="Button" />
+        android:text="Search for Buses" />
     
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.example.tabpracticefinal;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,9 +12,11 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
 
 	private BusServiceFragment bus;
 	private BloodHelpFragment blood;
+	private ConnectivityManager connMgr;
 	
-	public FragmentPageAdapter(FragmentManager fm) {
+	public FragmentPageAdapter(FragmentManager fm,ConnectivityManager connMgr) {
 		super(fm);
+		this.connMgr=connMgr;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -22,7 +26,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
 		
 		switch(key){
 			case 0:
-				bus= new BusServiceFragment();
+				bus= new BusServiceFragment(connMgr);
 				return bus;
 			case 1:
 				blood=new BloodHelpFragment();

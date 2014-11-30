@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONArray;
 /*import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;*/
@@ -43,22 +40,10 @@ public class MyInternet {
 			HttpGet request = new HttpGet();
 			request.setURI(website);
 			HttpResponse  response= client.execute(request);
-			/*int status = response.getStatusLine().getStatusCode();
-			if(status==200){
-				HttpEntity e = response.getEntity();
-				String data = EntityUtils.toString(e);
-				JSONObject last = new JSONObject(data);
-				return data;
-			}else{
-				//Toast.makeText(this, "Sorry", Toast.LENGTH_SHORT).show();
-				return "Sorry";
-			}*/
 			InputStream jsonStream = response.getEntity().getContent();
 			in = new BufferedReader (new InputStreamReader(jsonStream));
 			StringBuffer sb = new StringBuffer("");
 			String l= "";
-			//StringBuilder builder= new StringBuilder();
-			//String line;
 			String nl = System.getProperty("line.separator");
 			while((l=in.readLine())!=null){
 				sb.append(l+nl);
@@ -92,8 +77,8 @@ public class MyInternet {
 					return data;
 				}catch (Exception e){
 					e.printStackTrace();
-			}
 				}
+			}
 		}
 		
 	}

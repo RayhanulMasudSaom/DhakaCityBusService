@@ -5,6 +5,8 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -22,7 +24,7 @@ public class MainActivity extends  FragmentActivity implements ActionBar.TabList
 	FragmentPageAdapter ft;
 	int l;
 	int flag=1;
-	
+	ConnectivityManager connMgr;
 	
 	@Override
 	public void onBackPressed() {
@@ -39,8 +41,9 @@ public class MainActivity extends  FragmentActivity implements ActionBar.TabList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		viewPage= (ViewPager) findViewById(R.id.ViewPager);
-		ft= new FragmentPageAdapter(getSupportFragmentManager());
+		ft= new FragmentPageAdapter(getSupportFragmentManager(),connMgr);
 		actionbar= getActionBar();
 		viewPage.setAdapter(ft);
 		
@@ -86,6 +89,11 @@ public class MainActivity extends  FragmentActivity implements ActionBar.TabList
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
+		
+		
+	}
+	
+	public void ge(){
 		
 	}
 	
