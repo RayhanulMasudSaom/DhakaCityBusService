@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
 		
 		 @Override
 	     protected void onPostExecute(String result) {
-			 progressDialog.dismiss();
+			 //progressDialog.dismiss();
 			 tv2.setText(result);
 	         
 	    }
