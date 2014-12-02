@@ -44,9 +44,11 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
 		return 2;
 	}
 	
-	public void sendBackButtonResponse(int flag){
-		
-		bus.getBackButtonResponse(flag);
+	public void sendBackButtonResponse(int flag,int l){
+		if(l==0)
+			bus.getBackButtonResponse(flag);
+		else if(l==1)
+			blood.getBackButtonResponse(flag);
 	}
 
 }

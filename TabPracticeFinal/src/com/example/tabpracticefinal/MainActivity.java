@@ -33,7 +33,7 @@ public class MainActivity extends  FragmentActivity implements ActionBar.TabList
 		//new MainActivity();
 		viewPage.setCurrentItem(l);
 		flag=0;
-		ft.sendBackButtonResponse(flag);
+		ft.sendBackButtonResponse(flag,l);
 		flag=1;
 	}
 

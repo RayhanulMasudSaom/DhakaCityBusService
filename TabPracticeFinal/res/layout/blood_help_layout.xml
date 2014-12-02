@@ -2,27 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f8f888"
+    android:background="#ff5500"
     android:orientation="vertical" >
 
+    <TextView
+        android:id="@+id/txtViewBadhonZones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        
+        android:textSize="25dp"
+        android:textColor="#33ffff"
+        android:visibility="gone"
+        android:text="Select Badhon Zone" />
+
+    <ListView
+        android:id="@+id/listViewBadhonZones"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
     <Button
-        android:id="@+id/badhonList"
+        android:id="@+id/btnBadhonZones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:textColor="#F99820"
-        android:text="Badhon"
+        android:layout_marginTop="170dp"
+        android:textColor="#000000"
+        android:text="Badhon Zones"
         android:textSize="25dp"
         android:typeface="serif" />
 
     <Button
-        android:id="@+id/bloodBank"
+        android:id="@+id/btnBloodBanks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="25dp"
-        android:textColor="#F99820"
-        android:text="Blood Bank"
+        android:textColor="#000000"
+        android:text="Blood Banks of Dhaka"
         android:typeface="serif" />
 
 </LinearLayout>
