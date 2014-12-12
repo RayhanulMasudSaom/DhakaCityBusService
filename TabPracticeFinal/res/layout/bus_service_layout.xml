@@ -31,7 +31,28 @@
         android:layout_marginTop="10dp"
         android:visibility="gone"
         android:textColor="#33ffff"
-        android:text="Select District for OnlineTicketing" />
+        android:text="Select Location for OnlineTicketing From Dhaka" />
+    
+     <TextView
+        android:id="@+id/txtViewCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:textColor="#33ffff"
+        android:text=" " />
+     
+     <TextView
+        android:id="@+id/txtViewNoCounter"
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textColor="#33ffff"
+        android:text="No Online Ticketing Available" />
 
     <ListView
         android:id="@+id/listViewDistrict"
@@ -48,6 +69,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
+
+   
 
     <Button
         android:id="@+id/InterBusService"
@@ -115,5 +138,7 @@
         android:visibility="gone"
        	android:layout_marginTop="10dp"
         android:text="Search for Buses" />
+
+    
     
 </LinearLayout>

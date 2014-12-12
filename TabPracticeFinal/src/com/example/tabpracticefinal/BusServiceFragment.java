@@ -10,8 +10,10 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,13 +37,13 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 	DifferentBusRoutesSeparatorClass separator;
 	ArrayList<BusNameWithStopagesClass> busRoute;
 	private ProgressDialog progressDialog;
-	String returnedDataFromServer=null;
-	String startLoc,endLoc;
+	String returnedDataFromServer=null,districtName=null;
+	String startLoc,endLoc,webCounterName=null;
 	int selectedItem=-1;
 	int state=1;
 	View view;
 	Button btnInter,btnIntra,btnSearch;
-	TextView txtView1,txtView2,txtViewAvailableBus,txtViewDistrict;
+	TextView txtView1,txtView2,txtViewAvailableBus,txtViewDistrict,txtViewCounter,txtViewNoCounter;
 	AutoCompleteTextView auto1,auto2;
 	ListView busList,listViewDistrict,listViewCounter;
 	
@@ -60,13 +62,19 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 	};
 	
 	String []strDistrict= {"Akkelpur","Barisal","Bogra","Bonpara","Boroghoria",
-			"Chapainababhanj","Chhatak","Chittagong","Cox's Barzar",
+			"Chapainababganj","Chhatak","Chittagong","Cox's Bazar",
 		    "Dinajpur","Godagari","Hili","Jaipurhat","Kachikata","Kansat","Kesorhut","Khepupara",
 		    "Moulavibazar","Natore","Patuakhali","Pirganj","Puthia",
 		    "Rahanpur","Rajabari","Rajshahi","Rangpur",	"Rupatoli","Shaistaganj","Shibganj","Sirajganj",
 		    "Sunamganj","Tangail","Sylhet"};
-	String national="Chapainababganj Natore Puthia Rajshahi Sirajganj";
-	String ak="Sylhet";
+	String national="Chapainababganj Natore Puthia Rajshahi Sirajganj Tangail Kansat Godagari Bonpara "+
+		    "Kachikata Rajabari Boroghoria Rahanpur Kesorhut";
+	String desh="Chapainababganj Chittagong Cox's Bazar Godagari Kansat Natore Rajshahi Sirajganj Tangail"+
+		    "Kansat Puthia Shibganj Rajabari";
+	String shyamoli= "Sylhet Bogra Chapainababganj Dinajpur Jaipurhat Moulavibazar Natore Rajshahi Rangpur Sunamganj"+
+		    "Sirajganj Chhatak Kansat Pirganj Shaistaganj Rahanpur Hili Akkelpur";
+	String sakura="Rupatoli Barisal Patuakhali Khepupara";
+	
 	
 	ViewPager pager;
 	LayoutInflater infla;
@@ -88,6 +96,7 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		btnSearch=(Button) view.findViewById(R.id.btnSearch);
 		txtView1= (TextView) view.findViewById(R.id.textView1);
 		txtView2=(TextView) view.findViewById(R.id.textView2);
+		txtViewCounter=(TextView) view.findViewById(R.id.txtViewCounter);
 		auto1= (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView1);
 		auto2=(AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView2);
 		busList=(ListView) view.findViewById(R.id.listBusView);
@@ -95,6 +104,7 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		listViewDistrict=(ListView) view.findViewById(R.id.listViewDistrict);
 		txtViewAvailableBus=(TextView) view.findViewById(R.id.txtViewAvailableBus);
 		txtViewDistrict= (TextView) view.findViewById(R.id.txtViewDistrict);
+		txtViewNoCounter=(TextView) view.findViewById(R.id.txtViewNoCounter);
 		btnInter.setOnClickListener(this);
 		btnIntra.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
@@ -281,6 +291,10 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 			}
 			else if(state==6){
 				state=5;
+				//listViewDistrict.setVisibility(view.G);
+				listViewCounter.setVisibility(view.GONE);
+				txtViewCounter.setVisibility(View.GONE);
+				txtViewNoCounter.setVisibility(View.GONE);
 				showDistrict();
 			}
 	}
@@ -295,8 +309,17 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 			else if(arg0.getAdapter()==adapter2)
 				endLoc=(String) arg0.getItemAtPosition(arg2);
 			else if(arg0.getAdapter()==adapterDistrictList){
-				Toast.makeText(getActivity(), (String) arg0.getItemAtPosition(arg2), Toast.LENGTH_LONG).show();
+				districtName=(String) arg0.getItemAtPosition(arg2);
+				//Toast.makeText(getActivity(), (String) arg0.getItemAtPosition(arg2), Toast.LENGTH_LONG).show();
 				showBusCounterLink();
+				//hello();
+			}
+			else if(arg0.getAdapter()==adapterCounterList){
+				webCounterName=(String) arg0.getItemAtPosition(arg2);
+				//Toast.makeText(getActivity(), (String) arg0.getItemAtPosition(arg2), Toast.LENGTH_LONG).show();
+				//showBusCounterLink();
+				//hello();
+				goToWebsite();
 			}
 			
 	}
@@ -500,21 +523,35 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 	}
 	
 	public void showBusCounterLink(){
-		String districtName="Rajshahi";
+		//districtName="Rajshahi";
 		String[] counterNames;
 		listViewDistrict.setVisibility(view.GONE);
-		listViewCounter.setVisibility(view.VISIBLE);
-		//txtViewDistrict.setText("Dhaka to "+districtName);
-		ArrayList<String> counterList=null;
+		txtViewDistrict.setVisibility(View.GONE);
+		
+		
+		txtViewCounter.setText("Dhaka to "+districtName);
+		txtViewCounter.setVisibility(View.VISIBLE);
+		
+		ArrayList<String> counterList= new ArrayList<String>();
 		if(national.contains(districtName)){
 			counterList.add("National Travels");
-			Toast.makeText(getActivity(), "yess", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getActivity(), "yess", Toast.LENGTH_SHORT).show();
 		}
-		if(ak.contains(districtName)){
-			counterList.add("AK Travels");
+		if(desh.contains(districtName)){
+			counterList.add("Desh Travels");
 		}
-		 
+		if(sakura.contains(districtName)){
+			counterList.add("Sakura Paribahan");
+		}
+		if(shyamoli.contains(districtName)){
+			counterList.add("Shyamoli Paribahan");
+		}
+		
+		if(counterList.size()!=0){
+			listViewCounter.setVisibility(view.VISIBLE); 
+		
 		counterNames= new String[counterList.size()];
+		
 		for(int i=0;i<counterList.size();i++){
 			counterNames[i]=counterList.get(i);
 		}
@@ -523,6 +560,11 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		
 		listViewCounter.setAdapter(adapterCounterList);
 		listViewCounter.setOnItemClickListener(this);
+		}
+		else{
+			state=6;
+			txtViewNoCounter.setVisibility(View.VISIBLE);
+		}
 		//listViewDistrict.setOnItemClickListener(this);
 		//listViewDistrict.setOnItemSelectedListener(this);
 	}
@@ -548,4 +590,38 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		// TODO Auto-generated method stub
 		
 	}*/
+	public void goToWebsite(){
+		 NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+	        
+	     if (networkInfo != null && networkInfo.isConnected()) {
+	            
+		
+	    	 if(webCounterName=="Shyamoli Paribahan"){
+	    		 Uri uriUrl = Uri.parse("http://www.shyamoliparibahanbd.com");
+	    	     Intent launchWebsite = new Intent(Intent.ACTION_VIEW, uriUrl);
+	    	     startActivity(launchWebsite);
+	    		 //Intent intent= new Intent(Intent.ACTION_VIEW,);
+			
+			}
+			else if(webCounterName=="Desh Travels"){
+				 Uri uriUrl = Uri.parse("http://www.deshtravelsbd.com");
+	    	     Intent launchWebsite = new Intent(Intent.ACTION_VIEW, uriUrl);
+	    	     startActivity(launchWebsite);
+			}
+			else if(webCounterName=="National Travels"){
+				 Uri uriUrl = Uri.parse("http://www.nationaltravelsbd.com");
+	    	     Intent launchWebsite = new Intent(Intent.ACTION_VIEW, uriUrl);
+	    	     startActivity(launchWebsite);
+			}
+			else if(webCounterName=="Sakura Paribahan"){
+				 Uri uriUrl = Uri.parse("http://www.sakuraparibahanbd.com");
+	    	     Intent launchWebsite = new Intent(Intent.ACTION_VIEW, uriUrl);
+	    	     startActivity(launchWebsite);
+			}
+	     }
+	     else{
+	    	 Toast.makeText(getActivity(), "Internet Connection is not available", Toast.LENGTH_SHORT).show();
+	     }
+		webCounterName=null;
+	}
 }
