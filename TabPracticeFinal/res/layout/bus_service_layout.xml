@@ -93,12 +93,13 @@
         android:typeface="serif" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/txtViewFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_marginTop="80dp"
         android:textSize="25dp"
+        android:textColor="#33ffff"
         android:text="From" />
 
     <AutoCompleteTextView
@@ -114,12 +115,13 @@
     </AutoCompleteTextView>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtViewTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:textSize="25dp"
         android:layout_marginTop="15dp"
+        android:textColor="#33ffff"
         android:text="To" />
 
     <AutoCompleteTextView

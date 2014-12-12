@@ -22,18 +22,16 @@ public class MainActivity extends  FragmentActivity implements ActionBar.TabList
 	ActionBar actionbar;
 	ViewPager viewPage;
 	FragmentPageAdapter ft;
-	int l;
+	int selectedTabIndex;
 	int flag=1;
 	ConnectivityManager connMgr;
 	
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		//super.onBackPressed();
-		//new MainActivity();
-		viewPage.setCurrentItem(l);
+		viewPage.setCurrentItem(selectedTabIndex);
 		flag=0;
-		ft.sendBackButtonResponse(flag,l);
+		ft.sendBackButtonResponse(flag,selectedTabIndex);
 		flag=1;
 	}
 
@@ -49,7 +47,7 @@ public class MainActivity extends  FragmentActivity implements ActionBar.TabList
 		
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionbar.addTab(actionbar.newTab().setText("Bus Service").setTabListener(this));
-		actionbar.addTab(actionbar.newTab().setText("Blood Help").setTabListener(this));
+		actionbar.addTab(actionbar.newTab().setText("Medical Help").setTabListener(this));
 		viewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			
 			@Override
@@ -83,7 +81,7 @@ public class MainActivity extends  FragmentActivity implements ActionBar.TabList
 	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
 		viewPage.setCurrentItem(arg0.getPosition());
-		l=arg0.getPosition();
+		selectedTabIndex=arg0.getPosition();
 	}
 
 	@Override
@@ -92,12 +90,5 @@ public class MainActivity extends  FragmentActivity implements ActionBar.TabList
 		
 		
 	}
-	
-	public void ge(){
-		
-	}
-	
-
-
 	
 }

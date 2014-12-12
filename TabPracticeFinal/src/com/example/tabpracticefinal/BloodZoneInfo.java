@@ -6,9 +6,12 @@ public class BloodZoneInfo {
 	
 	public ArrayList<String> nameRepresentatives;
 	public ArrayList<String> number;
+	public String zoneName;
 	
-	BloodZoneInfo(){
-		
+	BloodZoneInfo(String zoneName){
+		this.zoneName=zoneName;
+		this.number= new ArrayList<String>();
+		this.nameRepresentatives= new ArrayList<String>();
 	}
 
 }

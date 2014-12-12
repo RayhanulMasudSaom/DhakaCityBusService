@@ -29,7 +29,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
 				bus= new BusServiceFragment(connMgr);
 				return bus;
 			case 1:
-				blood=new BloodHelpFragment();
+				blood=new BloodHelpFragment(connMgr);
 				return blood;
 				
 	        default:

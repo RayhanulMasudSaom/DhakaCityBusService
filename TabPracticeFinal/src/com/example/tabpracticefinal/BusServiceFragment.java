@@ -34,51 +34,58 @@ import android.widget.Toast;
 
 public class BusServiceFragment extends Fragment implements OnClickListener,OnItemClickListener {
 
-	DifferentBusRoutesSeparatorClass separator;
-	ArrayList<BusNameWithStopagesClass> busRoute;
+	private DifferentBusRoutesSeparatorClass separator;
+	private ArrayList<BusNameWithStopagesClass> busRoute;
 	private ProgressDialog progressDialog;
-	String returnedDataFromServer=null,districtName=null;
-	String startLoc,endLoc,webCounterName=null;
+	private String returnedDataFromServer=null,districtName=null;
+	private String startLoc,endLoc,webCounterName=null;
+	
 	int selectedItem=-1;
 	int state=1;
-	View view;
-	Button btnInter,btnIntra,btnSearch;
-	TextView txtView1,txtView2,txtViewAvailableBus,txtViewDistrict,txtViewCounter,txtViewNoCounter;
-	AutoCompleteTextView auto1,auto2;
-	ListView busList,listViewDistrict,listViewCounter;
+	private View view;
+	private Button btnInter,btnIntra,btnSearch;
+	private TextView txtViewFrom,txtViewTo,txtViewAvailableBus,txtViewDistrict,
+			txtViewCounter,txtViewNoCounter;
+	private AutoCompleteTextView auto1,auto2;
+	private ListView busList,listViewDistrict,listViewCounter;
 	
 	
-	String []strLocationFrom= { "mirpur-12", "mirpur-11", "mirpur-10", "kajipara","sheowrapara","farmgate",
+	private String []strLocationFrom= { "mirpur-12", "mirpur-11", "mirpur-10", "kajipara","sheowrapara","farmgate",
 			"shahbagh","pressclub","stadium","ittefaq","jonopoth","pallabi","mirpur-11.5","boikalihotel",
 			"t&t","rayshahebbazar","victoriapark","sadarghat","taltola","paltan","shaplachottor",
 			"sayedabad","agargaon","newmarket","etimkhana","golchokkor","mirpur-1","nilkhet",
 			"ajimpur","polashi","katabon","jattrabari"
 	};
-	String []strLocationTo= { "mirpur-12", "mirpur-11", "mirpur-10", "kajipara","sheowrapara","farmgate",
+	private String []strLocationTo= { "mirpur-12", "mirpur-11", "mirpur-10", "kajipara","sheowrapara","farmgate",
 			"shahbagh","pressclub","stadium","ittefaq","jonopoth","pallabi","mirpur-11.5","boikalihotel",
 			"t&t","rayshahebbazar","victoriapark","sadarghat","taltola","paltan","shaplachottor",
 			"sayedabad","agargaon","newmarket","etimkhana","golchokkor","mirpur-1","nilkhet",
 			"ajimpur","polashi","katabon","jattrabari"
 	};
 	
-	String []strDistrict= {"Akkelpur","Barisal","Bogra","Bonpara","Boroghoria",
+	private String []strDistrict= {"Akkelpur","Barisal","Bogra","Bonpara","Boroghoria",
 			"Chapainababganj","Chhatak","Chittagong","Cox's Bazar",
 		    "Dinajpur","Godagari","Hili","Jaipurhat","Kachikata","Kansat","Kesorhut","Khepupara",
 		    "Moulavibazar","Natore","Patuakhali","Pirganj","Puthia",
 		    "Rahanpur","Rajabari","Rajshahi","Rangpur",	"Rupatoli","Shaistaganj","Shibganj","Sirajganj",
 		    "Sunamganj","Tangail","Sylhet"};
-	String national="Chapainababganj Natore Puthia Rajshahi Sirajganj Tangail Kansat Godagari Bonpara "+
+	
+	private String national="Chapainababganj Natore Puthia Rajshahi Sirajganj Tangail Kansat Godagari Bonpara "+
 		    "Kachikata Rajabari Boroghoria Rahanpur Kesorhut";
-	String desh="Chapainababganj Chittagong Cox's Bazar Godagari Kansat Natore Rajshahi Sirajganj Tangail"+
+	
+	private String desh="Chapainababganj Chittagong Cox's Bazar Godagari Kansat Natore Rajshahi Sirajganj Tangail"+
 		    "Kansat Puthia Shibganj Rajabari";
-	String shyamoli= "Sylhet Bogra Chapainababganj Dinajpur Jaipurhat Moulavibazar Natore Rajshahi Rangpur Sunamganj"+
+	
+	private String shyamoli= "Sylhet Bogra Chapainababganj Dinajpur Jaipurhat Moulavibazar Natore Rajshahi Rangpur Sunamganj"+
 		    "Sirajganj Chhatak Kansat Pirganj Shaistaganj Rahanpur Hili Akkelpur";
-	String sakura="Rupatoli Barisal Patuakhali Khepupara";
+	
+	private String sakura="Rupatoli Barisal Patuakhali Khepupara";
 	
 	
-	ViewPager pager;
-	LayoutInflater infla;
-	ArrayAdapter<String> adapter1,adapter2,adapterDistrictList,adapterBusList,adapterStopageList,adapterCounterList;
+	private ViewPager pager;
+	private LayoutInflater infla;
+	private ArrayAdapter<String> adapterFrom,adapterTo,adapterDistrictList,
+			adapterBusList,adapterStopageList,adapterCounterList;
 	private ConnectivityManager connectivityManager;
 	
 	public BusServiceFragment(ConnectivityManager connectivityManager){
@@ -91,20 +98,29 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		// TODO Auto-generated method stub
 		
 		view= inflater.inflate(R.layout.bus_service_layout, container, false);
+		
+		//all buttons 
 		btnInter= (Button) view.findViewById(R.id.InterBusService);
 		btnIntra= (Button) view.findViewById(R.id.IntraBusService);
 		btnSearch=(Button) view.findViewById(R.id.btnSearch);
-		txtView1= (TextView) view.findViewById(R.id.textView1);
-		txtView2=(TextView) view.findViewById(R.id.textView2);
+		
+		//all textViews
+		txtViewFrom= (TextView) view.findViewById(R.id.txtViewFrom);
+		txtViewTo=(TextView) view.findViewById(R.id.txtViewTo);
 		txtViewCounter=(TextView) view.findViewById(R.id.txtViewCounter);
-		auto1= (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView1);
-		auto2=(AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView2);
-		busList=(ListView) view.findViewById(R.id.listBusView);
-		listViewCounter=(ListView) view.findViewById(R.id.listViewCounter);
-		listViewDistrict=(ListView) view.findViewById(R.id.listViewDistrict);
 		txtViewAvailableBus=(TextView) view.findViewById(R.id.txtViewAvailableBus);
 		txtViewDistrict= (TextView) view.findViewById(R.id.txtViewDistrict);
 		txtViewNoCounter=(TextView) view.findViewById(R.id.txtViewNoCounter);
+		
+		//autoTextView
+		auto1= (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView1);
+		auto2=(AutoCompleteTextView) view.findViewById(R.id.autoCompleteTextView2);
+		
+		//listViews
+		busList=(ListView) view.findViewById(R.id.listBusView);
+		listViewCounter=(ListView) view.findViewById(R.id.listViewCounter);
+		listViewDistrict=(ListView) view.findViewById(R.id.listViewDistrict);
+		
 		btnInter.setOnClickListener(this);
 		btnIntra.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
@@ -112,67 +128,70 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		auto2.setOnItemClickListener(this);
 		//listViewDistrict.setOnItemClickListener(this);
 		
-		
+		//ViewPager
 		pager= (ViewPager) getActivity().findViewById(R.id.ViewPager);
+		
 		state=1;
-		adapter2= new ArrayAdapter<String>(this.getActivity().getApplicationContext(),R.layout.auto_complete_text_view_show_layout,R.id.autoTextView,strLocationTo);
-		adapter1= new ArrayAdapter<String>(this.getActivity().getApplicationContext(),R.layout.auto_complete_text_view_show_layout,R.id.autoTextView,strLocationFrom);
-		auto1.setAdapter(adapter1);
+		
+		//Adapters
+		adapterTo= new ArrayAdapter<String>(this.getActivity().getApplicationContext(),R.layout.auto_complete_text_view_show_layout,R.id.autoTextView,strLocationTo);
+		adapterFrom= new ArrayAdapter<String>(this.getActivity().getApplicationContext(),R.layout.auto_complete_text_view_show_layout,R.id.autoTextView,strLocationFrom);
+		auto1.setAdapter(adapterFrom);
 		auto1.setThreshold(1);
-		auto2.setAdapter(adapter2);
+		auto2.setAdapter(adapterTo);
 		auto2.setThreshold(1);
 		
 		return view;
 	}
 	
+	//different buttons response and their respective does
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if(btnInter.isPressed()==true){
-			btnInter.setVisibility(v.GONE);
-			btnIntra.setVisibility(v.GONE);
-			txtView1.setVisibility(v.VISIBLE);
-			txtView2.setVisibility(v.VISIBLE);
-			auto1.setVisibility(v.VISIBLE);
-			auto2.setVisibility(v.VISIBLE);
-			btnSearch.setVisibility(v.VISIBLE);
-			txtViewAvailableBus.setVisibility(v.GONE);
-			busList.setVisibility(v.GONE);
+			
+			btnInter.setVisibility(View.GONE);
+			btnIntra.setVisibility(View.GONE);
+			txtViewFrom.setVisibility(View.VISIBLE);
+			txtViewTo.setVisibility(View.VISIBLE);
+			auto1.setVisibility(View.VISIBLE);
+			auto2.setVisibility(View.VISIBLE);
+			btnSearch.setVisibility(View.VISIBLE);
+			txtViewAvailableBus.setVisibility(View.GONE);
+			busList.setVisibility(View.GONE);
 			state=2;
+			
 		}
 		else if(btnIntra.isPressed()==true){
-			//Toast.makeText(getActivity(), "OK", Toast.LENGTH_SHORT).show();
+			
 			showDistrict();
 		}
 		
 		else if(btnSearch.isPressed()==true){
-			//Toast.makeText(getActivity(), startLoc+endLoc, Toast.LENGTH_SHORT).show();
-			//returnedStringFromServer=getDataFromServer();
-			//Toast.makeText(getActivity(), returnedStringFromServer, Toast.LENGTH_LONG).show();
-			/*int flag=0;*/
+			
 			int start=0,end=0;
 			
-				
+			//checking whether the given locations both are in the list
 			for(int i=0;i<strLocationFrom.length;i++){
-				if(strLocationFrom[i]==startLoc)
-				{
+				
+				if(strLocationFrom[i]==startLoc){
 					start=1;
-					//flag++;
 					
 				}
-				if(strLocationFrom[i]==endLoc)
-				{
+				
+				if(strLocationFrom[i]==endLoc){
+				
 					end=1;
-					//flag++;
 				}
-				if(start==1 && end==1)
+				
+				if(start==1 && end==1){
 					break;
+				}
+				
 			}
 			
 			if(end==0 && start==0){
 				Toast.makeText(getActivity(), "Select Locations From Given List\n", Toast.LENGTH_LONG).show();
-				//startLoc=null;
-				//endLoc=null;
 				auto1.setText("");
 				auto2.setText("");
 				startLoc=null;
@@ -180,56 +199,36 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 				return ;
 			}
 			
-			else if(end==start && endLoc==startLoc)
-			{
-				//startLoc=null;
-				//endLoc=null;
+			else if(end==start && endLoc==startLoc){
+			
 				startLoc=null;
 				endLoc=null;
 				auto1.setText("");
 				auto2.setText("");
-				Toast.makeText(getActivity(), "Invalid Input\nYour Current Location and Destination cannot be same", Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), "Invalid Input\nYour Current Location and Destination cannot be same", Toast.LENGTH_SHORT).show();
 				return ;
 			}
 			
-			else if(start==1 && end==0)
+			else if(end!=1 || start!=1)
 			{
-				//startLoc=null;
+				startLoc=null;
 				endLoc=null;
-				//auto1.setText("");
+				auto1.setText("");
 				auto2.setText("");
-				Toast.makeText(getActivity(), "Give your Current Location to 'To' field", Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), "Give location to 'Both' fields", Toast.LENGTH_SHORT).show();
 				return ;
 			}	
-			else if(end==1 && start==0){
-				startLoc=null;
-				//endLoc=null;
-				auto1.setText("");
-				//auto2.setText("");
-				Toast.makeText(getActivity(), "Give your Destination to 'From' field", Toast.LENGTH_LONG).show();
-				//startLoc=null;
-				//endLoc=null;
-				return ;
-			}
 			
-			//String stringUrl="http://infinite-woodland-5408.herokuapp.com/?start="+"farmgate"+"&end="+"shahbagh";
+			
 	        //ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 	        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 	        
 	        if (networkInfo != null && networkInfo.isConnected() && startLoc!=null && endLoc!=null) {
-	            //new DownloadWebpageTask2().execute(stringUrl);
 	        	new getBusNameFromServerAsync().execute("http://infinite-woodland-5408.herokuapp.com/?start="+startLoc+"&end="+endLoc);
 	        	
-				//flag=0;
-				/*startLoc=null;
-				endLoc=null;
-				auto1.setText("");
-				auto2.setText("");
-				*/
-				//Toast.makeText(getActivity(), text, duration)
-	        	//Toast.makeText(getActivity(), returnedDataFromServer, Toast.LENGTH_SHORT).show();
 	        } else {
-	            //tv2.setText("No network connection available.");
+	        	auto1.setText("");
+				auto2.setText("");
 	        	startLoc=null;
 	        	endLoc=null;
 	        	Toast.makeText(getActivity(), "No internet connection available", Toast.LENGTH_SHORT).show();
@@ -237,24 +236,22 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 	        }
 		}
 		
-		
-		
-		
 	}
 	
+	//when back button pressed, this will make everything to their previous state
 	
 	public void getBackButtonResponse(int flag){
 			
 			if(state==2){
-				btnInter.setVisibility(view.VISIBLE);
-				btnIntra.setVisibility(view.VISIBLE);
-				txtView1.setVisibility(view.GONE);
-				txtView2.setVisibility(view.GONE);
-				auto1.setVisibility(view.GONE);
-				auto2.setVisibility(view.GONE);
-				btnSearch.setVisibility(view.GONE);
-				txtViewAvailableBus.setVisibility(view.GONE);
-				busList.setVisibility(view.GONE);
+				btnInter.setVisibility(View.VISIBLE);
+				btnIntra.setVisibility(View.VISIBLE);
+				txtViewFrom.setVisibility(View.GONE);
+				txtViewTo.setVisibility(View.GONE);
+				auto1.setVisibility(View.GONE);
+				auto2.setVisibility(View.GONE);
+				btnSearch.setVisibility(View.GONE);
+				txtViewAvailableBus.setVisibility(View.GONE);
+				busList.setVisibility(View.GONE);
 				endLoc=null;
 				startLoc=null;
 				auto1.setText("");
@@ -266,23 +263,23 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 				
 			}
 			else if(state==3){
-				btnInter.setVisibility(view.GONE);
-				btnIntra.setVisibility(view.GONE);
-				txtView1.setVisibility(view.VISIBLE);
-				txtView2.setVisibility(view.VISIBLE);
-				auto1.setVisibility(view.VISIBLE);
-				auto2.setVisibility(view.VISIBLE);
-				btnSearch.setVisibility(view.VISIBLE);
-				txtViewAvailableBus.setVisibility(view.GONE);
-				busList.setVisibility(view.GONE);
+				btnInter.setVisibility(View.GONE);
+				btnIntra.setVisibility(View.GONE);
+				txtViewFrom.setVisibility(View.VISIBLE);
+				txtViewTo.setVisibility(View.VISIBLE);
+				auto1.setVisibility(View.VISIBLE);
+				auto2.setVisibility(View.VISIBLE);
+				btnSearch.setVisibility(View.VISIBLE);
+				txtViewAvailableBus.setVisibility(View.GONE);
+				busList.setVisibility(View.GONE);
 				
 				state=2;
 			}
 			else if(state==5){
-				listViewDistrict.setVisibility(view.GONE);
-				txtViewDistrict.setVisibility(view.GONE);
-				btnInter.setVisibility(view.VISIBLE);
-				btnIntra.setVisibility(view.VISIBLE);
+				listViewDistrict.setVisibility(View.GONE);
+				txtViewDistrict.setVisibility(View.GONE);
+				btnInter.setVisibility(View.VISIBLE);
+				btnIntra.setVisibility(View.VISIBLE);
 				state=1;
 			}
 			else if(state==4){
@@ -292,38 +289,41 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 			else if(state==6){
 				state=5;
 				//listViewDistrict.setVisibility(view.G);
-				listViewCounter.setVisibility(view.GONE);
+				listViewCounter.setVisibility(View.GONE);
 				txtViewCounter.setVisibility(View.GONE);
 				txtViewNoCounter.setVisibility(View.GONE);
 				showDistrict();
 			}
 	}
 	
+	
+	//getting the item index or element from the different list adapters 
+	
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
 		// TODO Auto-generated method stub
 		
-			if(arg0.getAdapter()==adapter1)
-				startLoc=(String) arg0.getItemAtPosition(arg2);
-			//auto1.
-			else if(arg0.getAdapter()==adapter2)
-				endLoc=(String) arg0.getItemAtPosition(arg2);
+			if(arg0.getAdapter()==adapterFrom)
+				startLoc=(String) arg0.getItemAtPosition(index);
+			
+			else if(arg0.getAdapter()==adapterTo)
+				endLoc=(String) arg0.getItemAtPosition(index);
+			
 			else if(arg0.getAdapter()==adapterDistrictList){
-				districtName=(String) arg0.getItemAtPosition(arg2);
-				//Toast.makeText(getActivity(), (String) arg0.getItemAtPosition(arg2), Toast.LENGTH_LONG).show();
+				districtName=(String) arg0.getItemAtPosition(index);
 				showBusCounterLink();
-				//hello();
 			}
 			else if(arg0.getAdapter()==adapterCounterList){
-				webCounterName=(String) arg0.getItemAtPosition(arg2);
-				//Toast.makeText(getActivity(), (String) arg0.getItemAtPosition(arg2), Toast.LENGTH_LONG).show();
-				//showBusCounterLink();
-				//hello();
+				webCounterName=(String) arg0.getItemAtPosition(index);
 				goToWebsite();
+			}
+			else if(arg0.getAdapter()==adapterBusList){
+				showRouteOfTheBus(index);
 			}
 			
 	}
 	
+	//Asynchronous method for downloading the data
 	private class getBusNameFromServerAsync extends AsyncTask<String, Void, String> {
 
 		@Override
@@ -337,8 +337,6 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 			// TODO Auto-generated method stub
 			
 			try {
-				//tv2.setText(urls[0]);
-				//data=urls[0];
 	            return downloadBusList(urls[0]);
 	        } catch (IOException e) {
 	            return null;
@@ -351,10 +349,9 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 			 if(result==null){
 				 startLoc=null;
 				 endLoc=null;
-				 
 				 auto1.setText("");
 				 auto2.setText("");
-				 Toast.makeText(getActivity(), "No available Bus Found", Toast.LENGTH_LONG).show();
+				 Toast.makeText(getActivity(), "No available Bus Found", Toast.LENGTH_SHORT).show();
 			 }
 			 else if(result.contains("erro")){
 				 startLoc=null;
@@ -362,11 +359,11 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 				 
 				 auto1.setText("");
 				 auto2.setText("");
-				 Toast.makeText(getActivity(), "Server Busy", Toast.LENGTH_LONG).show();
+				 Toast.makeText(getActivity(), "Server Busy", Toast.LENGTH_SHORT).show();
 			 }
 			 else{
 				 
-				 Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+				 //Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
 				 returnedDataFromServer=result;
 				 separator= new DifferentBusRoutesSeparatorClass(returnedDataFromServer,startLoc,endLoc);
 				 startLoc=null;
@@ -379,23 +376,14 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 				 busRoute=separator.separation();
 				 showAvailableBusMethod(busRoute);
 			 }
-			 //DifferentBusRoutesSeparatorClass separator= new DifferentBusRoutesSeparatorClass(result,startLoc,endLoc);
-			 //ArrayList<BusNameWithStopagesClass> busRoute= new ArrayList<BusNameWithStopagesClass>();
-			 //busRoute=separator.separation();
-			 //showAvailableBusMethod(busRoute);
-			//busRoute=null;
-			 //busRoute=null;
-				
-	         //Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
-	         //
 	    }
 
 	}
 	
+	//the connection making method with the server
+	
 	private String downloadBusList(String myurl) throws IOException{
 	    InputStream is = null;
-	    // Only display the first 500 characters of the retrieved
-	    // web page content.
 	    int len = 500;
 	        
 	    try {
@@ -426,7 +414,8 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		
 	}
 	
-	public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+	//getting the strings  from inputstream buffer from the returned data of the server
+	private String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
 	    Reader reader = null;
 	    reader = new InputStreamReader(stream, "UTF-8");        
 	    char[] buffer = new char[len];
@@ -434,23 +423,23 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 	    return new String(buffer);
 	}
 	
-	public void showAvailableBusMethod(ArrayList<BusNameWithStopagesClass> bus){
+	private void showAvailableBusMethod(ArrayList<BusNameWithStopagesClass> bus){
 		
-		//ListView list;
-		//ArrayList<BusNameWithStopagesClass> bus;
 		String [] busNames;
 		
+		//making invisible parts
+		btnInter.setVisibility(View.GONE);
+		btnIntra.setVisibility(View.GONE);
+		txtViewFrom.setVisibility(View.GONE);
+		txtViewTo.setVisibility(View.GONE);
+		auto1.setVisibility(View.GONE);
+		auto2.setVisibility(View.GONE);
+		btnSearch.setVisibility(View.GONE);
 		
-		btnInter.setVisibility(view.GONE);
-		btnIntra.setVisibility(view.GONE);
-		txtView1.setVisibility(view.GONE);
-		txtView2.setVisibility(view.GONE);
-		auto1.setVisibility(view.GONE);
-		auto2.setVisibility(view.GONE);
-		btnSearch.setVisibility(view.GONE);
+		//making visible parts
 		txtViewAvailableBus.setText("Available Bus");
-		txtViewAvailableBus.setVisibility(view.VISIBLE);
-		busList.setVisibility(view.VISIBLE);
+		txtViewAvailableBus.setVisibility(View.VISIBLE);
+		busList.setVisibility(View.VISIBLE);
 		
 		state=3;
 		
@@ -466,22 +455,27 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		
 	}
 	
-	public void showDistrict(){
+	//showing the district names to go from dhaka using online buying ticket facilities
+	private void showDistrict(){
 		
-		btnInter.setVisibility(view.GONE);
-		btnIntra.setVisibility(view.GONE);
-		txtView1.setVisibility(view.GONE);
-		txtView2.setVisibility(view.GONE);
-		auto1.setVisibility(view.GONE);
-		auto2.setVisibility(view.GONE);
-		btnSearch.setVisibility(view.GONE);
-		txtViewAvailableBus.setVisibility(view.GONE);
-		busList.setVisibility(view.GONE);
-		
-		txtViewDistrict.setVisibility(view.VISIBLE);
-		listViewDistrict.setVisibility(view.VISIBLE);
-		
+		//this is the state number
 		state=5;
+		
+		//Invisible Part
+		btnInter.setVisibility(View.GONE);
+		btnIntra.setVisibility(View.GONE);
+		txtViewFrom.setVisibility(View.GONE);
+		txtViewTo.setVisibility(View.GONE);
+		auto1.setVisibility(View.GONE);
+		auto2.setVisibility(View.GONE);
+		btnSearch.setVisibility(View.GONE);
+		txtViewAvailableBus.setVisibility(View.GONE);
+		busList.setVisibility(View.GONE);
+		
+		//Visible Part
+		txtViewDistrict.setVisibility(View.VISIBLE);
+		listViewDistrict.setVisibility(View.VISIBLE);
+		
 		
 		adapterDistrictList= new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,strDistrict);
 		
@@ -491,51 +485,49 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 	}
 	
 	
+	//showing the route of the bus of the specific bus paribahan available
 	
-	public void showRouteOfTheBus(int selectedBus){
+	private void showRouteOfTheBus(int selectedBus){
 		
-        ArrayList<String> stopageNamesArrayList;
-		
-		
-		/*btnInter.setVisibility(view.GONE);
-		btnIntra.setVisibility(view.GONE);
-		txtView1.setVisibility(view.GONE);
-		txtView2.setVisibility(view.GONE);
-		auto1.setVisibility(view.GONE);
-		auto2.setVisibility(view.GONE);
-		btnSearch.setVisibility(view.GONE);*/
-		txtViewAvailableBus.setText(busRoute.get(selectedBus).busName);
-		//txtViewAvailableBus.setVisibility(view.VISIBLE);
-		//busList.setVisibility(view.VISIBLE);
-		
+		//this is the state number
 		state=4;
+        
+		txtViewAvailableBus.setText(busRoute.get(selectedBus).busName);
 		
+		ArrayList<String> stopageNamesArrayList= new ArrayList<String>();
 		stopageNamesArrayList=busRoute.get(selectedBus).stopage;
+		
+		//getting the stopage names across the specific bus paribahan
 		String[] stopageNames=new String[stopageNamesArrayList.size()];
 		for(int i=0;i<stopageNamesArrayList.size();i++){
 			stopageNames[i]=stopageNamesArrayList.get(i);
 		}
 		
 		adapterStopageList =new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,stopageNames);
-		busList.setAdapter(adapterBusList);
-		//Toast.makeText(getActivity(), bus.size(), Toast.LENGTH_SHORT);
-		//busList.setOnItemClickListener(this);
+		busList.setAdapter(adapterStopageList);
+		
 	}
 	
-	public void showBusCounterLink(){
-		//districtName="Rajshahi";
+	//this method is to show the avabilable bus paribahan to  get ticket online from their website using
+	//their rules
+	
+	private void showBusCounterLink(){
+		
+		//this is the state number
+		state=6;
 		String[] counterNames;
-		listViewDistrict.setVisibility(view.GONE);
+		
+		//making invisible the districts name 
+		listViewDistrict.setVisibility(View.GONE);
 		txtViewDistrict.setVisibility(View.GONE);
 		
-		
+		//making visible the counter list available to buy ticket
 		txtViewCounter.setText("Dhaka to "+districtName);
 		txtViewCounter.setVisibility(View.VISIBLE);
 		
 		ArrayList<String> counterList= new ArrayList<String>();
 		if(national.contains(districtName)){
 			counterList.add("National Travels");
-			//Toast.makeText(getActivity(), "yess", Toast.LENGTH_SHORT).show();
 		}
 		if(desh.contains(districtName)){
 			counterList.add("Desh Travels");
@@ -550,47 +542,28 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 		if(counterList.size()!=0){
 			listViewCounter.setVisibility(view.VISIBLE); 
 		
-		counterNames= new String[counterList.size()];
+			counterNames= new String[counterList.size()];
 		
-		for(int i=0;i<counterList.size();i++){
-			counterNames[i]=counterList.get(i);
-		}
-		state=6;
-		adapterCounterList= new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,counterNames);
+			for(int i=0;i<counterList.size();i++){
+				counterNames[i]=counterList.get(i);
+			}
 		
-		listViewCounter.setAdapter(adapterCounterList);
-		listViewCounter.setOnItemClickListener(this);
+			adapterCounterList= new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,counterNames);
+		
+			listViewCounter.setAdapter(adapterCounterList);
+			listViewCounter.setOnItemClickListener(this);
 		}
 		else{
-			state=6;
+			
 			txtViewNoCounter.setVisibility(View.VISIBLE);
 		}
-		//listViewDistrict.setOnItemClickListener(this);
-		//listViewDistrict.setOnItemSelectedListener(this);
+
 	}
 
-
-	/*@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
-		if(arg0.getAdapter()==adapterBusList){
-			showRouteOfTheBus(arg2);
-		}
-		else if(arg0.getAdapter()==adapterDistrictList){
-			Toast.makeText(getActivity(), (String) arg0.getItemAtPosition(arg2), Toast.LENGTH_LONG).show();
-			showBusCounterLink((String)arg0.getItemAtPosition(arg2));
-		}
-		
-	}
-
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}*/
-	public void goToWebsite(){
+	
+	//after selecting a bus paribahan, this method is to go to their website using net connection
+	
+	private void goToWebsite(){
 		 NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 	        
 	     if (networkInfo != null && networkInfo.isConnected()) {

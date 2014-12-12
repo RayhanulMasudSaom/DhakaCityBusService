@@ -14,13 +14,31 @@
         android:textSize="25dp"
         android:textColor="#33ffff"
         android:visibility="gone"
-        android:text="Select Badhon Zone" />
+        android:text="Badhon Zones for Blood" />
 
     <ListView
         android:id="@+id/listViewBadhonZones"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/txtViewAvailableAmbulance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:textSize="25dp"
+        android:text="Available Ambulances" />
+
+    <ListView
+        android:id="@+id/listAmbulanceView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:visibility="gone"
+        android:layout_marginTop="15dp" >
     </ListView>
 
     <Button
@@ -34,13 +52,13 @@
         android:typeface="serif" />
 
     <Button
-        android:id="@+id/btnBloodBanks"
+        android:id="@+id/btnAmbulances"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="25dp"
         android:textColor="#000000"
-        android:text="Blood Banks of Dhaka"
+        android:text="Ambulance of Dhaka"
         android:typeface="serif" />
 
 </LinearLayout>

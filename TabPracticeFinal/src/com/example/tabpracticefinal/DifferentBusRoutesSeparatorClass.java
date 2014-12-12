@@ -12,14 +12,12 @@ public class DifferentBusRoutesSeparatorClass {
 	String to;
 	DifferentBusRoutesSeparatorClass(String route,String from, String to){
 		returnedDataWithAllBuses=route;
-		/*returnedDataWithAllBuses="Bikolpo"+"\n"+"Dhakeshwari,Atimkhana,Azimpur,NilKhet,New Market,Science Lab,Kolabagan,RaselSquare"+"\n"
-				+"Falgun"+"\n"+"Shahbagh,BataSignal,Science Lab,Atimkhana,Dhakeshwari"+
-				"\n"+"Metro"+"\n"+"City College,Science Lab,Azimpur,Atimkhana"+"\n"+
-				"Winner"+"\n"+"Mohammadpur,Science Lab,Nilkhet,Azimpur,Atimkhana"+"\n"+
-				"Dhamrai"+"\n"+"Kolabagan,Science Lab,New Market,Nilkhet,Azimpur,Atimkhana"+"\n";*/
 		this.from=from;
 		this.to=to;
 	}
+	
+	//separator the data from the returned string from the server
+	
 	public ArrayList<BusNameWithStopagesClass> separation() throws NoSuchElementException{
 		
 		StringTokenizer tokens = new StringTokenizer(returnedDataWithAllBuses,"\n");
@@ -41,14 +39,13 @@ public class DifferentBusRoutesSeparatorClass {
 			
 		}
 		
-		String fullRoutes = "";
-		
 		//sorting according to number of stopages between from to to locations
 		//direction suppose we have set the direction from Azimpur to Mirpur
 		//The data get from the server is that direction
 		// But the user wants to go to mirpur to Azimpur
 		// then here will re direct the data from mirpur to azimpur 
 		for(int i=0;i<arrayListForEachBus.size()-1;i++){
+			
 			for(int j=i+1;j<arrayListForEachBus.size();j++){
 				
 				int k=arrayListForEachBus.get(i).stopage.indexOf(from);
@@ -66,13 +63,15 @@ public class DifferentBusRoutesSeparatorClass {
 					Collections.swap(arrayListForEachBus,i,j);
 				
 				}
+				
 			}
+			
 		}
 		
 		//make it serial from to to location
 		for(int i=0;i<arrayListForEachBus.size();i++){
-			int k= arrayListForEachBus.get(i).stopage.size()-arrayListForEachBus.get(i).stopage.indexOf("Science Lab");
-			int m= arrayListForEachBus.get(i).stopage.size()- arrayListForEachBus.get(i).stopage.indexOf("Atimkhana");
+			int k= arrayListForEachBus.get(i).stopage.size()-arrayListForEachBus.get(i).stopage.indexOf(from);
+			int m= arrayListForEachBus.get(i).stopage.size()- arrayListForEachBus.get(i).stopage.indexOf(to);
 			if(k<m){
 				for(int j=0,r=arrayListForEachBus.get(i).stopage.size()-1;j<arrayListForEachBus.get(i).stopage.size()/2;j++,r--){
 					Collections.swap(arrayListForEachBus.get(i).stopage,j,r);
