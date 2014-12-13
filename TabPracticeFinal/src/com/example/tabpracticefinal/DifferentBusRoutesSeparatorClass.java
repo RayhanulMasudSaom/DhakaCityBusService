@@ -27,7 +27,7 @@ public class DifferentBusRoutesSeparatorClass {
 			while(tokens.hasMoreTokens()){
 			BusNameWithStopagesClass bus = new BusNameWithStopagesClass(tokens.nextToken());
 			String str=tokens.nextToken();
-			StringTokenizer busAndStopagesSeparatorTokenizer = new StringTokenizer(str);
+			StringTokenizer busAndStopagesSeparatorTokenizer = new StringTokenizer(str,",");
 				while(busAndStopagesSeparatorTokenizer.hasMoreTokens()){
 				
 					bus.stopage.add(busAndStopagesSeparatorTokenizer.nextToken());

@@ -104,7 +104,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 			NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 	        
 	        if (networkInfo != null && networkInfo.isConnected()) {
-	        	new getBadhonDataFromServerAsync().execute("http://infinite-woodland-5408.herokuapp.com/?start=badhon&end=list");
+	        	new getBadhonDataFromServerAsync().execute("http://infinite-woodland-5408.herokuapp.com/badhon");
 	        	
 	        } else {
 	        	Toast.makeText(getActivity(), "No internet connection available", Toast.LENGTH_SHORT).show();
@@ -118,7 +118,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 			NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 	        
 	        if (networkInfo != null && networkInfo.isConnected()) {
-	        	new getAmbulanceDataFromServerAsync().execute("http://infinite-woodland-5408.herokuapp.com/?start=ambulance&end=list");
+	        	new getAmbulanceDataFromServerAsync().execute("http://infinite-woodland-5408.herokuapp.com/ambulance");
 	        	
 	        } else {
 	        	Toast.makeText(getActivity(), "No internet connection available", Toast.LENGTH_SHORT).show();
@@ -158,7 +158,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
 		// TODO Auto-generated method stub
-		Toast.makeText(getActivity(), strBadhonZones[index], Toast.LENGTH_LONG).show();
+		//Toast.makeText(getActivity(), strBadhonZones[index], Toast.LENGTH_LONG).show();
 		if(arg0.getAdapter()==adapterBadhonZones){
 			
 		}
@@ -297,7 +297,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 		
 		state=5;
         
-		txtViewAvailableAmbulance.setText("Tap to call");
+		txtViewAvailableAmbulance.setText("Contact Numbers");
 		
 		ArrayList<String> numbersArrayList= new ArrayList<String>();
 		numbersArrayList=ambulanceInfo.get(selectedAmbulanceIndex).number;

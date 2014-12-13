@@ -50,7 +50,71 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 	private ListView busList,listViewDistrict,listViewCounter;
 	
 	
-	private String []strLocationFrom= { "mirpur-12", "mirpur-11", "mirpur-10", "kajipara","sheowrapara","farmgate",
+	private String []strLocationFrom={ 
+	 "Abdullahpur","Agargaon","Airport","Ajimpur","Ajompur","Amin Bazar","Amtoli","Ansar Camp","Arambag",
+	 "Asad Gate","Badda Link Road","Bangla Motor","Bangla College","Basabo","Bashtola","Bastohara",
+	"Bashundhara","Bata Signal",
+	"Bijoy Shoroni","Board Bazar","Bonani","Bonoshree","Borobari","Bypass Biswa Road",
+	 "Chairman Bari","Cherag Ali","Chiriakhana","Chowdhury Para","City College","College Gate","Colombia",
+	 "Darus Salam","Dhakeshwari","Dhamrai","Dhanmondi-27","Dhanmondi-32","Dholaikhal","Doyagonj",
+	
+	 "Farmgate","Fulbaria(Savar)",
+	 "Gabtoli","Gazipura","Gazipur Chourasta","Genda(Savar)","Golapbag","Gulistan","Gulshan-1",
+	 "Hatbox","Hazi Para","Hazir Pukur","Hemayetpur","Hossen Market","House Building","Hurricane",
+	 "Ittefaq",
+	 "Jahangirnagar Univ","Jashimuddin","Jatrabari","Jatiyo Biswabiddaloy","Jigatola",
+	 "Kakrail","Katabon","Kazi Bari","Kajipara","Kamlapur","Kawran Bazar","Khamar Bari","Khilgaon","Khilkhet",
+	"Kolabagan","Kollyanpur",
+	"Kuril Biswa Road","Kuril Chourasta",
+	
+	 "Majar Road","Malek Bari","Malibag","Maniknagar","Merul Badda","Milgate","Mirpur-1","Mirpur-2",
+	"Mirpur-10","Mirpur-11","Mirpur-11.5","Mirpur-12","Moddho Badda","Mogbazar","Mohakhali","Mohammadpur",
+	"Motijheel","Motsho Bhaban",
+	"Mouchak","Mugda",
+	 "Nabinagar","Nabisco","New Market","Nondon Park","Norda","Notre Dame College","Notun Bazar",
+	
+	 "Paltan","Panthapath","Pir Jongi Majar","Press Club","Proshika Mor",
+	 "Rainbow Crossing","Rajarbag","Rajlokkhi","Rampura TV Center","Rupnagar",
+	 "Sadarghat","Saidabad","Savar Bazar","Science Lab","Shahbag","Shahazadpur","Shatrasta",
+	 "Sheorapara","Shialbari","Shishu Mela","Shukrabad","Shyamoli","Signboard(Gazipur)","Sonargaon Mor",
+	 "Taltola","Tangail BusStop","Targach","Technical","Thana Road","Thana Stand","Tibbot","Tongi Bazar",
+	"Tongi Station Road","TT Para",
+	 "Uttor Badda",
+	 "Vashon Sorok","Vushir Mil"};
+	
+	private String []strLocationTo={ 
+			 "Abdullahpur","Agargaon","Airport","Ajimpur","Ajompur","Amin Bazar","Amtoli","Ansar Camp","Arambag",
+			 "Asad Gate","Badda Link Road","Bangla Motor","Bangla College","Basabo","Bashtola","Bastohara",
+			"Bashundhara","Bata Signal",
+			"Bijoy Shoroni","Board Bazar","Bonani","Bonoshree","Borobari","Bypass Biswa Road",
+			 "Chairman Bari","Cherag Ali","Chiriakhana","Chowdhury Para","City College","College Gate","Colombia",
+			 "Darus Salam","Dhakeshwari","Dhamrai","Dhanmondi-27","Dhanmondi-32","Dholaikhal","Doyagonj",
+			
+			 "Farmgate","Fulbaria(Savar)",
+			 "Gabtoli","Gazipura","Gazipur Chourasta","Genda(Savar)","Golapbag","Gulistan","Gulshan-1",
+			 "Hatbox","Hazi Para","Hazir Pukur","Hemayetpur","Hossen Market","House Building","Hurricane",
+			 "Ittefaq",
+			 "Jahangirnagar Univ","Jashimuddin","Jatrabari","Jatiyo Biswabiddaloy","Jigatola",
+			 "Kakrail","Katabon","Kazi Bari","Kajipara","Kamlapur","Kawran Bazar","Khamar Bari","Khilgaon","Khilkhet",
+			"Kolabagan","Kollyanpur",
+			"Kuril Biswa Road","Kuril Chourasta",
+			
+			 "Majar Road","Malek Bari","Malibag","Maniknagar","Merul Badda","Milgate","Mirpur-1","Mirpur-2",
+			"Mirpur-10","Mirpur-11","Mirpur-11.5","Mirpur-12","Moddho Badda","Mogbazar","Mohakhali","Mohammadpur",
+			"Motijheel","Motsho Bhaban",
+			"Mouchak","Mugda",
+			 "Nabinagar","Nabisco","New Market","Nondon Park","Norda","Notre Dame College","Notun Bazar",
+			
+			 "Paltan","Panthapath","Pir Jongi Majar","Press Club","Proshika Mor",
+			 "Rainbow Crossing","Rajarbag","Rajlokkhi","Rampura TV Center","Rupnagar",
+			 "Sadarghat","Saidabad","Savar Bazar","Science Lab","Shahbag","Shahazadpur","Shatrasta",
+			 "Sheorapara","Shialbari","Shishu Mela","Shukrabad","Shyamoli","Signboard(Gazipur)","Sonargaon Mor",
+			 "Taltola","Tangail BusStop","Targach","Technical","Thana Road","Thana Stand","Tibbot","Tongi Bazar",
+			"Tongi Station Road","TT Para",
+			 "Uttor Badda",
+			 "Vashon Sorok","Vushir Mil"};
+	
+	/*private String []strLocationFrom= { "mirpur-12", "mirpur-11", "mirpur-10", "kajipara","sheowrapara","farmgate",
 			"shahbagh","pressclub","stadium","ittefaq","jonopoth","pallabi","mirpur-11.5","boikalihotel",
 			"t&t","rayshahebbazar","victoriapark","sadarghat","taltola","paltan","shaplachottor",
 			"sayedabad","agargaon","newmarket","etimkhana","golchokkor","mirpur-1","nilkhet",
@@ -61,7 +125,7 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 			"t&t","rayshahebbazar","victoriapark","sadarghat","taltola","paltan","shaplachottor",
 			"sayedabad","agargaon","newmarket","etimkhana","golchokkor","mirpur-1","nilkhet",
 			"ajimpur","polashi","katabon","jattrabari"
-	};
+	};*/
 	
 	private String []strDistrict= {"Akkelpur","Barisal","Bogra","Bonpara","Boroghoria",
 			"Chapainababganj","Chhatak","Chittagong","Cox's Bazar",
@@ -582,7 +646,7 @@ public class BusServiceFragment extends Fragment implements OnClickListener,OnIt
 	    	     startActivity(launchWebsite);
 			}
 			else if(webCounterName=="National Travels"){
-				 Uri uriUrl = Uri.parse("http://www.nationaltravelsbd.com");
+				 Uri uriUrl = Uri.parse("http://www.nationaltravels-bd.com");
 	    	     Intent launchWebsite = new Intent(Intent.ACTION_VIEW, uriUrl);
 	    	     startActivity(launchWebsite);
 			}
