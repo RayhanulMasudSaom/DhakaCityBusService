@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -45,6 +46,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 	private ArrayList<AmbulanceInfo> ambulanceInfo;
 	private ArrayList<BloodZoneInfo> zoneInfo;
 	
+	String [] zoneNames;
 	private String [] strBadhonZones={ "AnondoMohon College(Mymensingh)",
 			"Bangladesh University of Engineering Technology (BUET)",
 			"Bangladesh Agricultural University","Begum Rokeya University",
@@ -152,6 +154,10 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 			state=4;
 			showAmbulanceName(ambulanceInfo);
 		}
+		/*else if(state==3){
+			state=2;
+			showZoneName(zoneInfo);
+		}*/
 		
 	}
 
@@ -159,14 +165,14 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 	public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
 		// TODO Auto-generated method stub
 		//Toast.makeText(getActivity(), strBadhonZones[index], Toast.LENGTH_LONG).show();
-		if(arg0.getAdapter()==adapterBadhonZones){
+		//if(arg0.getAdapter()==adapterBadhonZones){
 			
-		}
-		else if(arg0.getAdapter()==adapterAmbulanceList){
+		//}
+		if(arg0.getAdapter()==adapterAmbulanceList){
 			showNumberOfTheAmbulance(index);
 		}
 		else if(arg0.getAdapter()==adapterBadhonZones){
-			showContactsOfTheZone(index);
+			//showContactsOfTheZone(index);
 		}
 		
 	}
@@ -174,6 +180,26 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 	
 	private void showContactsOfTheZone(int index) {
 		// TODO Auto-generated method stub
+		state=3;
+        
+		txtViewBadhonZones.setText("Contact Numbers");
+		
+		/*ArrayList<String> numbersArrayList= new ArrayList<String>();
+		numbersArrayList=ambulanceInfo.get(selectedAmbulanceIndex).number;
+		
+		//getting the stopage names across the specific bus paribahan
+		String[] numbers=new String[numbersArrayList.size()];
+		for(int i=0;i<numbersArrayList.size();i++){
+			numbers[i]=numbersArrayList.get(i);
+		}
+		
+		adapterAmbulanceNumberList =new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,numbers);
+		listAmbulanceView.setAdapter(adapterAmbulanceNumberList);*/
+		String [] contact={zoneNames[index]};
+		adapterBadhonZones =new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,contact);
+		listViewBadhonZones.setAdapter(adapterBadhonZones);
+		//Toast.makeText(getActivity(), bus.size(), Toast.LENGTH_SHORT);
+		listViewBadhonZones.setOnItemClickListener(this);
 		
 	}
 
@@ -357,7 +383,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 	
 	public void showZoneName(ArrayList<BloodZoneInfo> zone){
 		
-		String [] zoneNames;
+	    
 		
 		//making invisible parts
 		btnBadhonZones.setVisibility(View.GONE);
@@ -366,7 +392,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 		txtViewAvailableAmbulance.setVisibility(View.GONE);
 		
 		//making visible parts
-		txtViewBadhonZones.setText("Available Ambulance");
+		txtViewBadhonZones.setText("Badhon Zones");
 		txtViewAvailableAmbulance.setVisibility(View.VISIBLE);
 		listViewBadhonZones.setVisibility(View.VISIBLE);
 		
@@ -375,14 +401,13 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 		
 		zoneNames=new String[zone.size()];
 		for(int i=0;i<zone.size();i++){
-			zoneNames[i]=zone.get(i).zoneName;
+			zoneNames[i]=strBadhonZones[i]+"\n"+zone.get(i).nameRepresentatives+"\n"+zone.get(i).number;
 		}
 		
 		adapterBadhonZones =new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,zoneNames);
-		listViewBadhonZones.setAdapter(adapterAmbulanceList);
+		listViewBadhonZones.setAdapter(adapterBadhonZones);
 		//Toast.makeText(getActivity(), bus.size(), Toast.LENGTH_SHORT);
 		listViewBadhonZones.setOnItemClickListener(this);
 	}
-	
 
 }

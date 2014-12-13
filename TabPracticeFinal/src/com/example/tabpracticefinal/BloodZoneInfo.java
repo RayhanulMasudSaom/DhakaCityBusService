@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class BloodZoneInfo {
 	
-	public ArrayList<String> nameRepresentatives;
-	public ArrayList<String> number;
-	public String zoneName;
+	public String nameRepresentatives;
+	public String number;
 	
-	BloodZoneInfo(String zoneName){
-		this.zoneName=zoneName;
-		this.number= new ArrayList<String>();
-		this.nameRepresentatives= new ArrayList<String>();
+	
+	BloodZoneInfo(String name,String number){
+		//this.zoneName=zoneName;
+		this.number= number;
+		this.nameRepresentatives=name;
 	}
 
 }

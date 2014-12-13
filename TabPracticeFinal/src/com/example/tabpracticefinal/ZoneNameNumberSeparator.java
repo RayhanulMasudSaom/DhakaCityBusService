@@ -19,14 +19,15 @@ String returnedDataWithAmbulances;
 		
 		try{
 			while(tokens.hasMoreTokens()){
-			BloodZoneInfo zone = new BloodZoneInfo(tokens.nextToken());
-			String str=tokens.nextToken();
+			BloodZoneInfo zone = new BloodZoneInfo(tokens.nextToken(),tokens.nextToken());
+			/*String str=tokens.nextToken();
 			StringTokenizer nameAndNumberSeparatorTokenizer = new StringTokenizer(str,",");
 				while(nameAndNumberSeparatorTokenizer.hasMoreTokens()){
 				
 					zone.nameRepresentatives.add(nameAndNumberSeparatorTokenizer.nextToken());
 					zone.number.add(nameAndNumberSeparatorTokenizer.nextToken());
-				}
+				}*/
+			
 			
 			arrayListForEachZone.add(zone);
 			}
