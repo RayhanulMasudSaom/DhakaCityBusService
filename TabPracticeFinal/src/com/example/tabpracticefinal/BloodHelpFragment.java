@@ -150,10 +150,10 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 			listAmbulanceView.setVisibility(view.GONE);
 			txtViewAvailableAmbulance.setVisibility(view.GONE);
 		}
-		else if(state==5){
+		/*else if(state==5){
 			state=4;
 			showAmbulanceName(ambulanceInfo);
-		}
+		}*/
 		/*else if(state==3){
 			state=2;
 			showZoneName(zoneInfo);
@@ -169,7 +169,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 			
 		//}
 		if(arg0.getAdapter()==adapterAmbulanceList){
-			showNumberOfTheAmbulance(index);
+			//showNumberOfTheAmbulance(index);
 		}
 		else if(arg0.getAdapter()==adapterBadhonZones){
 			//showContactsOfTheZone(index);
@@ -309,7 +309,13 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 		
 		ambulanceNames=new String[ambulance.size()];
 		for(int i=0;i<ambulance.size();i++){
-			ambulanceNames[i]=ambulance.get(i).ambulanceName;
+			ambulanceNames[i]=ambulance.get(i).ambulanceName+"\nContact:";
+			ArrayList<String> numbersArrayList= new ArrayList<String>();
+			numbersArrayList=ambulanceInfo.get(i).number;
+			//String[] numbers=new String[numbersArrayList.size()];
+			for(int j=0;j<numbersArrayList.size();j++){
+				ambulanceNames[i]+="\n"+numbersArrayList.get(j);
+			}
 		}
 		
 		adapterAmbulanceList =new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,ambulanceNames);
@@ -383,8 +389,6 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 	
 	public void showZoneName(ArrayList<BloodZoneInfo> zone){
 		
-	    
-		
 		//making invisible parts
 		btnBadhonZones.setVisibility(View.GONE);
 		btnAmbulances.setVisibility(View.GONE);
@@ -401,7 +405,7 @@ public class BloodHelpFragment extends Fragment implements OnClickListener,OnIte
 		
 		zoneNames=new String[zone.size()];
 		for(int i=0;i<zone.size();i++){
-			zoneNames[i]=strBadhonZones[i]+"\n"+zone.get(i).nameRepresentatives+"\n"+zone.get(i).number;
+			zoneNames[i]=strBadhonZones[i]+"\nContact:\n"+zone.get(i).nameRepresentatives+"\n"+zone.get(i).number;
 		}
 		
 		adapterBadhonZones =new ArrayAdapter<String>(this.getActivity(),R.layout.available_bus_name_show,R.id.txtBusName,zoneNames);
